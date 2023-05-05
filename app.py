@@ -6,6 +6,6 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/transcribe", methods=["POST"])
+@app.route("/transcribe/", methods=["POST"])
 def transcribe():
     print("TRANSCRIBE ROUTE HIT!")
