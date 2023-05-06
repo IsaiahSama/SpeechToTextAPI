@@ -11,12 +11,16 @@ def recognize(audio_file):
     with sr.AudioFile("./audios/output.wav") as source:
         audio = r.record(source)
 
+    text = ""
     try:
-        print("Google Speech Recognition thinks you said " + r.recognize_google(audio))
+       text =  r.recognize_google(audio)
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
+        return {"error": "Audio could not be understood. Try again"}
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        return {"error": e}
+    return {"text": text}
 
 if __name__ == "__main__":
     recognize("test.mp3")
