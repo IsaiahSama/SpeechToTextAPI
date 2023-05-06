@@ -10,7 +10,8 @@ def recognize(audio_file):
 
     system(fr"ffmpeg -i {AUDIO_FILE} ./audios/output.wav")
 
-    remove(AUDIO_FILE)
+    if audio_file != "test.mp3":
+        remove(AUDIO_FILE)
 
     r = sr.Recognizer()
     with sr.AudioFile("./audios/output.wav") as source:
