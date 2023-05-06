@@ -1,11 +1,16 @@
 import speech_recognition as sr
 
-from os import system
+from os import system, path, remove
 
 def recognize(audio_file):
     AUDIO_FILE = f"./audios/{audio_file}"
 
+    if path.exists("./audios/output.wav"):
+        remove("./audios/output.wav")
+
     system(fr"ffmpeg -i {AUDIO_FILE} ./audios/output.wav")
+
+    remove(AUDIO_FILE)
 
     r = sr.Recognizer()
     with sr.AudioFile("./audios/output.wav") as source:
