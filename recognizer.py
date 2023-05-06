@@ -2,7 +2,7 @@ import speech_recognition as sr
 
 from os import system
 
-def transcribe(audio_file):
+def recognize(audio_file):
     AUDIO_FILE = f"./audios/{audio_file}"
 
     system(fr"ffmpeg -i {AUDIO_FILE} ./audios/output.wav")
@@ -19,4 +19,4 @@ def transcribe(audio_file):
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
 if __name__ == "__main__":
-    transcribe("test.mp3")
+    recognize("test.mp3")
