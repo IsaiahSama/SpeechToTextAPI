@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
+from json import dumps
 from recognizer import recognize
 
 app = Flask(__name__)
@@ -18,7 +19,8 @@ def transcribe():
 
     data = recognize(audio_file.filename)
 
-    if "error" in data:
-        return "AN ERROR OCCURED!"
+    if data["error"] != None:
+        return Response(dumps(data), status=400, mimetype="application/json")
+        
     
     return jsonify(data)
