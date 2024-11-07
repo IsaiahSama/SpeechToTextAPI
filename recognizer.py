@@ -19,14 +19,14 @@ def recognize(audio_file):
 
     text = ""
     try:
-       text =  r.recognize_google(audio)
+        text =  r.recognize_google(audio)
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
-        return {"error": "Audio could not be understood. Try again"}
+        return {"error": "Audio could not be understood. Try again", "text": ""}
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
-        return {"error": e}
-    return {"text": text}
+        return {"error": e, "text": ""}
+    return {"text": text, "error": None}
 
 if __name__ == "__main__":
     recognize("test.mp3")
