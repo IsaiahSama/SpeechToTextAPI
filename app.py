@@ -11,9 +11,8 @@ def index():
 @app.route("/transcribe/", methods=["POST"])
 def transcribe():
     audio_file = request.files.get("audio", None)
-
     if not audio_file:
-        return "FAILURE!"
+        return Response(dumps({"error": "No audio file was received. Expected a file named 'audio'", "text": ""}), status=400, mimetype="application/json")
 
     audio_file.save(f"./audios/{audio_file.filename}")
 
@@ -24,3 +23,6 @@ def transcribe():
         
     
     return jsonify(data)
+
+if __name__ == "__main__":
+    app.run()
