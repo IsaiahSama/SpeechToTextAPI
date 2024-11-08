@@ -8,14 +8,22 @@ def recognize(audio_file):
     if path.exists("./audios/output.wav"):
         remove("./audios/output.wav")
 
-    system(fr"ffmpeg -i {AUDIO_FILE} ./audios/output.wav")
+    try:
+        system(fr"ffmpeg -i {AUDIO_FILE} ./audios/output.wav")
+    except Exception as e:
+        print(e)
+        return {"error": e, "text": ""}
 
     if audio_file != "test.mp3":
         remove(AUDIO_FILE)
 
     r = sr.Recognizer()
-    with sr.AudioFile("./audios/output.wav") as source:
-        audio = r.record(source)
+    try:
+        with sr.AudioFile("./audios/output.wav") as source:
+            audio = r.record(source)
+    except FileNotFoundError as e:
+        print(e)
+        return {"error": "Audio file not found on server.", "text": ""}
 
     text = ""
     try:
