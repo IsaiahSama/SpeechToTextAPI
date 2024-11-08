@@ -20,6 +20,7 @@ def recognize(audio_file):
     r = sr.Recognizer()
     try:
         with sr.AudioFile("./audios/output.wav") as source:
+            r.adjust_for_ambient_noise(source, 1)
             audio = r.record(source)
     except FileNotFoundError as e:
         print(e)
@@ -31,6 +32,7 @@ def recognize(audio_file):
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
         return {"error": "Audio could not be understood. Try again", "text": ""}
+    
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
         return {"error": e, "text": ""}
